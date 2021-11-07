@@ -41,9 +41,12 @@ def run():
     words = read_file()
     word = choose_word(words)
     word_dict = make_dict(word.strip())
-    word_dict = set_letters(word_dict, 'e')
-    print(word_dict)
-    print_word(word_dict, word)
+
+    while False in list(word_dict.values()):
+        letter = input('Please enter a letter: ')
+        word_dict = set_letters(word_dict, letter)
+        os.system('clear')     
+        print_word(word_dict, word)
 
 
     # print(word_dict)
