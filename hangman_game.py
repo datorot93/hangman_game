@@ -1,13 +1,17 @@
+# Hangman
+from hangman_art import HANGMANPICS
+
+# Utilities
 import os
 import random
+
+
 
 def read_file():
     words = []
 
-    with open('./data/data.txt', 'r', encoding='utf_8') as file:        
-        # for word in file:
-        #     if word != '\n':
-        #         words.append(word)
+    with open('./data/data.txt', 'r', encoding='utf_8') as file:
+
         words = [word for word in file if word != '\n']
     
     return words
@@ -31,26 +35,40 @@ def print_word(word_dict, word):
             print(letter, end=' ')
 
 def set_letters(word_dict, letter):
-
-    # word_dict = dict(map(lambda k, v: v = True if k == letter, word_dict))
+    """ Function to  update the letters """
     word_dict.update({ key: True for (key, value) in word_dict.items() if key == letter})
 
     return word_dict
 
 def run():
+    errors = 0
+
     words = read_file()
     word = choose_word(words)
     word_dict = make_dict(word.strip())
+    os.system('clear')  
+    print_word(word_dict, word)
 
-    while False in list(word_dict.values()):
+    while False in list(word_dict.values()) or errors < len(HANGMANPICS):
+        print()
+        print('Errors: {}'.format(errors))
         letter = input('Please enter a letter: ')
         word_dict = set_letters(word_dict, letter)
-        os.system('clear')     
-        print_word(word_dict, word)
+        if letter not in word:
+            os.system('clear')     
+            print(HANGMANPICS[errors])
+            print_word(word_dict, word)
+            errors+=1
+        else:
+            os.system('clear')
+            if errors != 0:
+                print(HANGMANPICS[errors])
+            print_word(word_dict, word)
 
 
     # print(word_dict)
 
 
 if __name__=='__main__':
+    print(HANGMANPICS[0])
     run()
