@@ -66,9 +66,6 @@ def run():
             print_word(word_dict, word)
 
 
-    # print(word_dict)
-
-
 if __name__=='__main__':
     print(HANGMANPICS[0])
     run()
